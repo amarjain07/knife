@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Knife</string>
+    <string name="dagger_hilt_sample">Dagger hilt sample</string>
+</resources>
