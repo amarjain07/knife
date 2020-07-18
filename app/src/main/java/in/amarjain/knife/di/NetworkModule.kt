@@ -1,11 +1,12 @@
 package `in`.amarjain.knife.di
 
-import `in`.amarjain.knife.utils.HeaderInterceptor
-import `in`.amarjain.knife.utils.UrlProvider
+import `in`.amarjain.knife.utils.*
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,8 +19,20 @@ class NetworkModule {
     fun headerInterceptor(): HeaderInterceptor = HeaderInterceptor()
 
     @Provides
-    fun okHttpClient(headerInterceptor: HeaderInterceptor): OkHttpClient = OkHttpClient
+    fun authController(@ApplicationContext context: Context): AuthController =
+        AuthControllerImpl(context)
+
+    @Provides
+    fun authInterceptor(authController: AuthController): KnifeAuthenticator =
+        KnifeAuthenticator(authController)
+
+    @Provides
+    fun okHttpClient(
+        headerInterceptor: HeaderInterceptor,
+        knifeAuthenticator: KnifeAuthenticator
+    ): OkHttpClient = OkHttpClient
         .Builder()
+        .authenticator(knifeAuthenticator)
         .addInterceptor(headerInterceptor)
         .build()
 

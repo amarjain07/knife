@@ -4,6 +4,6 @@ interface UrlProvider {
     fun base(): String
 }
 
-class KnifeUrlProvider(): UrlProvider {
-    override fun base(): String = "https://serpapi.com/"
+class KnifeUrlProvider: UrlProvider {
+    override fun base(): String = "https://google.com/"
 }

@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -10,13 +10,13 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "in.amarjain.knife"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -25,24 +25,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
-    //Project
-    implementation project(':login')
-
     kotlin.values().forEach { implementation it }
     androidx.values().forEach { implementation it }
     architecturecomponents.values().forEach { implementation it }
     dagger.values().forEach { implementation it }
     retrofit.values().forEach { implementation it }
     coroutines.values().forEach { implementation it }
-    image.values().forEach { implementation it }
     kapt.values().forEach { kapt it }
 
     test.values().forEach { testImplementation it }

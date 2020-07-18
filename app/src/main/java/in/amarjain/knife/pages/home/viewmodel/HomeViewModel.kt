@@ -5,10 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class HomeViewModel(repository: HomeRepository) : ViewModel() {
-    init {
+class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
+    fun init() {
         viewModelScope.launch {
-            val asa = repository.searchImages("birds")
+            try {
+                val response = repository.searchImages("birds")
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
         }
     }
 }
